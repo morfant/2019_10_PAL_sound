@@ -277,7 +277,7 @@ SynthDef(\liedRSaw,
     }).add;
 )
 
-
+{BrownNoise.ar(0.1)!2}.play;
 
 // Hidden Protocol main A(try 1)
 (
@@ -308,9 +308,9 @@ fork{
 //        if (0.5.coin, {a = [64, 66].at(1.rand)}, {a = [65, 67].at(1.rand)});
 //        if (0.5.coin, {b = [70, 72].at(1.rand)}, {b = [71, 73].at(1.rand)});
 //        if (0.5.coin, {c = [76, 77].at(1.rand)}, {c = [79, 80].at(1.rand)});
-        if (0.5.coin, {a = 59}, {a = 62});
-        if (0.5.coin, {b = 65}, {b = 64});
-        if (0.5.coin, {c = 67}, {c = 69});
+        if (0.5.coin, {a = 49}, {a = 52});
+        if (0.5.coin, {b = 55}, {b = 54});
+        if (0.5.coin, {c = 57}, {c = 59});
         ("value a: " + a).postln;
         ("value b: " + b).postln;
         ("value c: " + c).postln;
@@ -345,7 +345,7 @@ fork{
 		cc.set(\atTime, (c.midicps + c2)/100);*/
 
 
-        4.01.rand.wait;
+        6.01.rand.wait;
     }
 })
 

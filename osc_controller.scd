@@ -145,14 +145,18 @@ var counter_trace = 0;
 ~o_switch.free;
 ~o_switch = OSCFunc({|msg, time, addr, recvPort|
 	msg.postln;
+	Synth(\tak, [\freq, 36.midicps, \filfreq, 2300, \amp, 15]);
 	if (msg[1] == 1, {
+
 		// Depend on 'main_theme.scd'
 		// world A
+		~main_A_end.value();
 		~main_B_end.value();
 		~main_A.value(0.2, 5.0); // (amp, atkTime)
 	}, {
 		// world B
-		~main_A_end.value(3); // (relTime)
+		~main_A_end.value(); // (relTime)
+		~main_B_end.value();
 		~main_B.value();
 	})
 

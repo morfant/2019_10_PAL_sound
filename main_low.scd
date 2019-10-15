@@ -24,7 +24,7 @@ SystemClock.sched(
 });
 
 
-~masterEQ.gui.onSelect('b&m');
+// ~masterEQ.gui.onSelect('b&m');
 
 ~pbPlay_111 = ~pb111 = Pbind(
 	\instrument,        \tak,

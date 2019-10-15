@@ -167,9 +167,12 @@ a.set(\gate, 0)
 
 
 /************************** Sequence ***************************/
-
-~main_A.value(0.2, 5.0) // (amp, atkTime)
-~main_A_end.value(3) // (relTime)
-
-~main_B.value()
+(
 ~main_B_end.value();
+~main_A.value(0.2, 5.0); // (amp, atkTime)
+)
+
+(
+~main_A_end.value(3);// (relTime)
+~main_B.value();
+)
