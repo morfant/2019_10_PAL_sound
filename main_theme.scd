@@ -53,12 +53,12 @@ a.set(\gate, 0)
 		~loop_a = fork{
 			inf.do{
 
-				if (0.5.coin, {a = 59}, {a = 62});
-				if (0.5.coin, {b = 65}, {b = 64});
-				if (0.5.coin, {c = 67}, {c = 69});
-				("value a: " + a).postln;
-				("value b: " + b).postln;
-				("value c: " + c).postln;
+				if (0.5.coin, {a = 49}, {a = 52});
+				if (0.5.coin, {b = 55}, {b = 54});
+				if (0.5.coin, {c = 57}, {c = 59});
+				// ("value a: " + a).postln;
+				// ("value b: " + b).postln;
+				// ("value c: " + c).postln;
 
 				// if (0.5.coin, {a2 = 5.rand}, {a2 = 5.rand * -1});
 				// if (0.5.coin, {b2 = 7.rand}, {b2 = 7.rand * -1});
@@ -96,9 +96,9 @@ a.set(\gate, 0)
 		~synth_b_b = Synth(\liedRSaw, [\amp, amp, \atkTime, atkTime]);
 		~synth_b_c = Synth(\liedRSaw, [\amp, amp, \atkTime, atkTime]);
 
-		~synth_b_aa = Synth(\zwei_ein, [\amp, amp/2, \atkTime, atkTime]);
-		~synth_b_bb = Synth(\zwei_ein, [\amp, amp/2, \atkTime, atkTime]);
-		~synth_b_cc = Synth(\zwei_ein, [\amp, amp/2, \atkTime, atkTime]);
+		~synth_b_aa = Synth(\zwei_ein, [\amp, amp/3, \atkTime, atkTime]);
+		~synth_b_bb = Synth(\zwei_ein, [\amp, amp/3, \atkTime, atkTime]);
+		~synth_b_cc = Synth(\zwei_ein, [\amp, amp/3, \atkTime, atkTime]);
 
 		~loop_b = fork{
 			inf.do{
@@ -110,17 +110,17 @@ a.set(\gate, 0)
 				if (0.5.coin, {a = 60}, {a = 62});
 				if (0.5.coin, {b = 65}, {b = 64});
 				if (0.5.coin, {c = 67}, {c = 69});
-				("value a: " + a).postln;
-				("value b: " + b).postln;
-				("value c: " + c).postln;
+				// ("value a: " + a).postln;
+				// ("value b: " + b).postln;
+				// ("value c: " + c).postln;
 
 				if (0.5.coin, {a2 = 5.rand}, {a2 = 5.rand * -1});
 				if (0.5.coin, {b2 = 7.rand}, {b2 = 7.rand * -1});
 				if (0.5.coin, {c2 = 9.rand}, {c2 = 9.rand * -1});
-				("value a2: " + a2).postln;
-				("value b2: " + b2).postln;
-				("value c2: " + c2).postln;
-				(" ").postln;
+				// ("value a2: " + a2).postln;
+				// ("value b2: " + b2).postln;
+				// ("value c2: " + c2).postln;
+				// (" ").postln;
 
 				~synth_b_aa.set(\freq, (a).midicps);
 				~synth_b_bb.set(\freq, (b).midicps);

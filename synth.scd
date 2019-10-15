@@ -108,7 +108,7 @@ SynthDef(\dds, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq
     // Out.ar(0, Pan2.ar((lowcut_sig + lowcut_sig2) * env, pan, amp));
 }).add;
 
-
+Synth(\dds)
 //stool
 SynthDef(\ten, {| freq = 500, modfreq = 5, amp = 0.4, amp2 = 0.9, filfreq = 300, rq = 0.1, gate = 1, nff = 2.5,
 	atTime = 0.1, susTime = 0.1, relTime = 0.9, pan = 0, nf = 7|

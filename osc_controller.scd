@@ -110,10 +110,12 @@ thisProcess.openPorts;
 
 ( // OSC receiver
 var counter_trace = 0;
+~main_A_end.value();
+~main_A.value(0.2, 5.0); // (amp, atkTime)
 
 ~o_trace.free;
 ~o_trace = OSCFunc({|msg, time, addr, recvPort|
-	msg.postln;
+	// msg.postln;
 	// Synth(\hat, [\freq, 300 + 100.rand, \amp, 1]);
 	// Synth(\tak, [\freq, [700, 500, 400].choose]);
 
@@ -131,7 +133,7 @@ var counter_trace = 0;
 ~o_look.free;
 ~o_look = OSCFunc({|msg, time, addr, recvPort|
 	var look_o, look_x;
-	msg.postln;
+	// msg.postln;
 
 	look_o = msg[1];
 	look_x = msg[2];
@@ -144,21 +146,24 @@ var counter_trace = 0;
 
 ~o_switch.free;
 ~o_switch = OSCFunc({|msg, time, addr, recvPort|
-	msg.postln;
-	Synth(\tak, [\freq, 36.midicps, \filfreq, 2300, \amp, 15]);
-	if (msg[1] == 1, {
-
+	// msg[1].postln;
+	// Synth(\tak, [\freq, 36.midicps, \filfreq, 2300, \amp, 605]);
+	Synth(\dds, [\amp, 6.0]);
+	if (msg[1] == '1', {
+		"111".postln;
+		// msg[1].postln;
 		// Depend on 'main_theme.scd'
 		// world A
-		~main_A_end.value();
+		// ~main_A_end.value();
 		~main_B_end.value();
-		~main_A.value(0.2, 5.0); // (amp, atkTime)
-	}, {
-		// world B
+		~main_A.value(); // (amp, atkTime)
+	});
+	if (msg[1] == '0',{
+		"000".postln;
 		~main_A_end.value(); // (relTime)
-		~main_B_end.value();
+		// ~main_B_end.value();
 		~main_B.value();
-	})
+	});
 
 }, '\switch');
 )
