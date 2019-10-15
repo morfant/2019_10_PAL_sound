@@ -13,6 +13,8 @@ SynthDef(\bass, {| out = 0, amp = 0.2, lf = 100, rq = 0.9, envdur = 0.4, gate = 
 	Out.ar(out, Pan2.ar(lowcut_sig * env, 0, amp));
 }).add;
 
+// Synth('bass');
+
 //Synth 2
 SynthDef(\hat, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, rq = 0.2, gate = 1, pan = 0 |
 	var sig, env, sig2, lowcut_sig, lowcut_sig2;
@@ -26,6 +28,8 @@ SynthDef(\hat, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, r
 	Out.ar(out, Pan2.ar(lowcut_sig2 + lowcut_sig * env, pan, amp));
 }).add;
 
+// Synth('hat');
+
 //Synth 2
 SynthDef(\hat2, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, rq = 0.2, gate = 1, pan = 0, susTime = 1 |
 	var sig, env, sig2, lowcut_sig, lowcut_sig2;
@@ -38,6 +42,8 @@ SynthDef(\hat2, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, 
 	// Out.ar(0, Pan2.ar(sig2 + sig * env, pan, amp));
 	Out.ar(out, Pan2.ar(lowcut_sig2 + lowcut_sig * env, pan, amp));
 }).add;
+
+// Synth('hat2');
 
 //Synth 3
 SynthDef(\tak, {| out = 0, freq = 300, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq = 3200, rq = 0.1, gate = 1,
@@ -55,6 +61,8 @@ SynthDef(\tak, {| out = 0, freq = 300, modfreq = 5, amp = 0.6, amp2 = 0.9, filfr
 	Out.ar(out, Pan2.ar((lowcut_sig) * env, pan, amp));
 }).add;
 
+// Synth('tak');
+
 SynthDef(\tak2, {| out = 0, freq = 300, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq = 3200, rq = 0.1, gate = 1,
 	atTime = 0.1, susTime = 2.0, relTime = 0.1, pan = 0 |
 
@@ -70,7 +78,7 @@ SynthDef(\tak2, {| out = 0, freq = 300, modfreq = 5, amp = 0.6, amp2 = 0.9, filf
 	Out.ar(out, Pan2.ar((lowcut_sig) * env, pan, amp));
 }).add;
 
-
+// Synth('tak2');
 
 //Synth 4
 SynthDef(\dd, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq = 300, rq = 0.1, gate = 1,
@@ -88,6 +96,8 @@ SynthDef(\dd, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq 
     // Out.ar(0, Pan2.ar((sig + sig2) * env, pan, amp));
     Out.ar(out, Pan2.ar((lowcut_sig + lowcut_sig2) * env, pan, amp));
 }).add;
+
+Synth('dd', ['amp', 20.0]);
 
 //Synth 5
 SynthDef(\dds, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq = 300, rq = 0.1, gate = 1,
@@ -108,10 +118,11 @@ SynthDef(\dds, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq
     // Out.ar(0, Pan2.ar((lowcut_sig + lowcut_sig2) * env, pan, amp));
 }).add;
 
-Synth(\dds)
+// Synth('dds');
+
 //stool
 SynthDef(\ten, {| freq = 500, modfreq = 5, amp = 0.4, amp2 = 0.9, filfreq = 300, rq = 0.1, gate = 1, nff = 2.5,
-	atTime = 0.1, susTime = 0.1, relTime = 0.9, pan = 0, nf = 7|
+	atTime = 0.1, susTime = 0.1, relTime = 0.9, pan = 0, nf = 7, hpc1 = 100, hpc2 = 100, cv = 9|
 	var sig, env, sig2, del, mod, lowcut_sig, lowcut_sig2, gateSig;
 	// sig = LFSaw.ar(freq);
 	sig = LFNoise0.ar(freq);
@@ -120,16 +131,19 @@ SynthDef(\ten, {| freq = 500, modfreq = 5, amp = 0.4, amp2 = 0.9, filfreq = 300,
 	// sig2 = Impulse.ar(0, mul: amp2);
 	sig2 = LFNoise0.kr(nf);
 	// env = EnvGen.kr(Env.linen(atTime, susTime, relTime), gate, doneAction: 2);
-	gateSig = LFNoise0.kr(nff);
-	env = EnvGen.kr(Env.linen(sustainTime: LFNoise0.kr(2).range(0.01, 0.5), releaseTime: 0.05, curve: 9), gateSig, doneAction: 2);
+	// gateSig = LFNoise0.kr(nff);
+	gateSig = 1;
+	// env = EnvGen.kr(Env.linen(sustainTime: LFNoise0.kr(2).range(0.01, 0.5), releaseTime: 0.05, curve: 9), gateSig, doneAction: 2);
+	env = EnvGen.kr(Env.linen(sustainTime: susTime, releaseTime: relTime, curve: cv), gateSig, doneAction: 2);
 	//env = EnvGen.kr(Env.perc(atTime, relTime), gate, doneAction: 2);
-	lowcut_sig = HPF.ar(sig, 100);
-	lowcut_sig2 = HPF.ar(sig2, 100);
+	lowcut_sig = HPF.ar(sig, hpc1);
+	lowcut_sig2 = HPF.ar(sig2, hpc2);
 
 	Out.ar(0, Pan2.ar((sig + sig2) * env, pan, amp));
 	// Out.ar(0, Pan2.ar((sig + lowcut_sig2) * env, pan, amp));
 }).add;
 
+Synth('ten', ['amp', 0.5, 'amp2', 0.4, 'freq', rrand(766, 500), 'nf', rrand(500, 100), 'susTime', 0.05, 'relTime', 0.1, 'hpc1', 300, 'hpc2', 100, 'cv', -10]);
 
 //Synth - mic in
 SynthDef(\micin, {| amp = 0, gate = 1 |
@@ -148,6 +162,7 @@ SynthDef(\gobeat, {|freq = 240, dur = 0.2, gate = 1, amp = 0.5|
 	Out.ar(0, Pan2.ar(sig)*amp);
 }).add;
 
+// Synth('gobeat')
 
 // conceptual dance
 SynthDef(\condan, {|freq = 240, dur = 0.2, gate = 1, amp = 0.5, freq2 = 33, amp2 = 0.5|
@@ -159,6 +174,8 @@ SynthDef(\condan, {|freq = 240, dur = 0.2, gate = 1, amp = 0.5, freq2 = 33, amp2
 	Out.ar(0, Pan2.ar(sig)*amp);
 }).add;
 
+
+Synth('condan', ['freq', rrand(100, 400), 'amp', 2.0])
 
 SynthDef(\sine, {|freq = 240, dur = 0.2, gate = 1, atk = 0.1, amp = 0.5|
 	// var env = EnvGen.kr(Env.perc(atk, dur), gate, doneAction: 2);

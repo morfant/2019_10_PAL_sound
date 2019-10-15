@@ -85,7 +85,7 @@ a.set(\gate, 0)
 
 // Hidden Protocol main B
 ~main_B = {
-	arg amp = 0.2, atkTime = 2.0;
+	arg amp = 0.3, atkTime = 2.0;
 	var a, b, c;
 	var a2, b2, c2;
 
@@ -96,9 +96,9 @@ a.set(\gate, 0)
 		~synth_b_b = Synth(\liedRSaw, [\amp, amp, \atkTime, atkTime]);
 		~synth_b_c = Synth(\liedRSaw, [\amp, amp, \atkTime, atkTime]);
 
-		~synth_b_aa = Synth(\zwei_ein, [\amp, amp/3, \atkTime, atkTime]);
-		~synth_b_bb = Synth(\zwei_ein, [\amp, amp/3, \atkTime, atkTime]);
-		~synth_b_cc = Synth(\zwei_ein, [\amp, amp/3, \atkTime, atkTime]);
+		~synth_b_aa = Synth(\zwei_ein, [\amp, amp/2, \atkTime, atkTime]);
+		~synth_b_bb = Synth(\zwei_ein, [\amp, amp/2, \atkTime, atkTime]);
+		~synth_b_cc = Synth(\zwei_ein, [\amp, amp/2, \atkTime, atkTime]);
 
 		~loop_b = fork{
 			inf.do{
@@ -174,5 +174,5 @@ a.set(\gate, 0)
 
 (
 ~main_A_end.value(3);// (relTime)
-~main_B.value();
+~main_B.value(0.3, 5.0);
 )

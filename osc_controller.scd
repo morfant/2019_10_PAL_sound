@@ -148,21 +148,28 @@ var counter_trace = 0;
 ~o_switch = OSCFunc({|msg, time, addr, recvPort|
 	// msg[1].postln;
 	// Synth(\tak, [\freq, 36.midicps, \filfreq, 2300, \amp, 605]);
-	Synth(\dds, [\amp, 6.0]);
+	// Synth(\dds, [\amp, 6.0]);
+
+	// switching effect
+	Synth('ten', ['amp', 0.2, 'amp2', 0.1, 'freq', rrand(766, 500), 'nf', rrand(500, 100), 'susTime', 0.05, 'relTime', 0.1, 'hpc1', 300, 'hpc2', 100, 'cv', -10]);
+
+	// Synth('condan', ['freq', rrand(3500, 6000), 'amp', 2.0]);
+	// Synth('dd', ['freq', 1, 'modfreq', 100, 'filfreq', 1700, 'amp', 30.0]);
+
+
 	if (msg[1] == '1', {
-		"111".postln;
-		// msg[1].postln;
+
 		// Depend on 'main_theme.scd'
 		// world A
 		// ~main_A_end.value();
-		~main_B_end.value();
-		~main_A.value(); // (amp, atkTime)
+		~main_B_end.value(0.1);
+		~main_A.value(0.15, 0.1); // (amp, atkTime)
 	});
 	if (msg[1] == '0',{
-		"000".postln;
-		~main_A_end.value(); // (relTime)
+		// "000".postln;
+		~main_A_end.value(0.1); // (relTime)
 		// ~main_B_end.value();
-		~main_B.value();
+		~main_B.value(0.2, 0.1);
 	});
 
 }, '\switch');
