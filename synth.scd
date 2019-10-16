@@ -175,7 +175,7 @@ SynthDef(\condan, {|freq = 240, dur = 0.2, gate = 1, amp = 0.5, freq2 = 33, amp2
 }).add;
 
 
-Synth('condan', ['freq', rrand(100, 400), 'amp', 2.0])
+// Synth('condan', ['freq', rrand(100, 400), 'amp', 2.0])
 
 SynthDef(\sine, {|freq = 240, dur = 0.2, gate = 1, atk = 0.1, amp = 0.5|
 	// var env = EnvGen.kr(Env.perc(atk, dur), gate, doneAction: 2);

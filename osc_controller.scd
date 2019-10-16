@@ -113,36 +113,45 @@ var counter_trace = 0;
 ~main_A_end.value();
 ~main_A.value(0.2, 5.0); // (amp, atkTime)
 
-~o_trace.free;
-~o_trace = OSCFunc({|msg, time, addr, recvPort|
-	// msg.postln;
-	// Synth(\hat, [\freq, 300 + 100.rand, \amp, 1]);
-	// Synth(\tak, [\freq, [700, 500, 400].choose]);
+// ~o_trace.free;
+// ~o_trace = OSCFunc({|msg, time, addr, recvPort|
+// 	// msg.postln;
+// 	// Synth(\hat, [\freq, 300 + 100.rand, \amp, 1]);
+// 	// Synth(\tak, [\freq, [700, 500, 400].choose]);
 
-	counter_trace = counter_trace + 1;
-	// counter_trace.postln;
+// 	counter_trace = counter_trace + 1;
+// 	// counter_trace.postln;
 
-	if (counter_trace % 10 == 0, {
-		Synth(\tak, [\freq, rrand(80, 120)]);
-	});
+// 	if (counter_trace % 10 == 0, {
+// 		Synth(\tak, [\freq, rrand(80, 120)]);
+// 	});
 
 
-	// Synth(\dd, [\freq, 700.rand]);
-}, '\trace');
+// 	// Synth(\dd, [\freq, 700.rand]);
+// }, '\trace');
 
-~o_look.free;
-~o_look = OSCFunc({|msg, time, addr, recvPort|
-	var look_o, look_x;
-	// msg.postln;
+// ~o_look.free;
+// ~o_look = OSCFunc({|msg, time, addr, recvPort|
+// 	var look_o, look_x;
+// 	// msg.postln;
 
-	look_o = msg[1];
-	look_x = msg[2];
+// 	look_o = msg[1];
+// 	look_x = msg[2];
 
-	// Synth(\hat, [\freq, 300 + 100.rand, \amp, 1]);
-	// Synth(\tak, [\freq, 700.rand]);
-	// Synth(\dd, [\freq, 700.rand]);
-}, '\look');
+// 	// Synth(\hat, [\freq, 300 + 100.rand, \amp, 1]);
+// 	// Synth(\tak, [\freq, 700.rand]);
+// 	// Synth(\dd, [\freq, 700.rand]);
+// }, '\look');
 
+// ~o_eyeon.free;
+// ~o_eyeon = OSCFunc({|msg, time, addr, recvPort|
+// 	msg.postln;
+
+// 	Synth('bass', [\freqs, (#[200, 300] + (#[130, 140].rand*5)).postln, \amp, 3, \envdur, 0.2]);
+// 	// Synth(\hat, [\freq, 300 + 100.rand, \amp, 1]);
+// 	// Synth(\tak, [\freq, 700.rand]);
+// 	// Synth(\dd, [\freq, 700.rand]);
+// }, '\eyeon');
 
 ~o_switch.free;
 ~o_switch = OSCFunc({|msg, time, addr, recvPort|
@@ -151,7 +160,8 @@ var counter_trace = 0;
 	// Synth(\dds, [\amp, 6.0]);
 
 	// switching effect
-	Synth('ten', ['amp', 0.2, 'amp2', 0.1, 'freq', rrand(766, 500), 'nf', rrand(500, 100), 'susTime', 0.05, 'relTime', 0.1, 'hpc1', 300, 'hpc2', 100, 'cv', -10]);
+	Synth('ten', ['amp', 0.2, 'amp2', 0.1, 'freq', rrand(1766, 500), 'nf', rrand(1500, 100), 'susTime', 0.05, 'relTime', 0.1, 'hpc1', 100, 'hpc2', 100, 'cv', -10]);
+	Synth('bass', [\freqs, (#[200, 300] + (#[130, 140].rand*5)).postln, \amp, 20, \envdur, 0.2]);
 
 	// Synth('condan', ['freq', rrand(3500, 6000), 'amp', 2.0]);
 	// Synth('dd', ['freq', 1, 'modfreq', 100, 'filfreq', 1700, 'amp', 30.0]);
@@ -168,8 +178,7 @@ var counter_trace = 0;
 	if (msg[1] == '0',{
 		// "000".postln;
 		~main_A_end.value(0.1); // (relTime)
-		// ~main_B_end.value();
-		~main_B.value(0.2, 0.1);
+		~main_B.value(0.2, 0.2);
 	});
 
 }, '\switch');
