@@ -5,7 +5,8 @@ SynthDef(\bass, {| out = 0, amp = 0.2, lf = 100, rq = 0.9, envdur = 0.4, gate = 
     amps=#[0.1, 0.23, 0.12, 0.05],
     phases=#[1, 1.5, 2, 2.5]|
 	var env, sig, lowcut_sig;
-	env = EnvGen.kr(Env.sine(envdur), gate, doneAction: 2);
+	// env = EnvGen.kr(Env.sine(envdur), gate, doneAction: 2);
+	env = EnvGen.kr(Env.new([0, 1, 0], [0.1, 0.1], [2, -5]), gate, doneAction: 2);
 	sig = DynKlang.ar(`[freqs, amps, phases]);
 	sig = RLPF.ar(sig, lf, rq);
 	lowcut_sig = HPF.ar(sig, 100);
@@ -13,8 +14,9 @@ SynthDef(\bass, {| out = 0, amp = 0.2, lf = 100, rq = 0.9, envdur = 0.4, gate = 
 	Out.ar(out, Pan2.ar(lowcut_sig * env, 0, amp));
 }).add;
 
-// Synth('bass');
+Synth('bass', [\freqs, (#[200, 300] + (#[130, 140].rand)).postln, \amp, 3, \envdur, 0.2]);
 
+// #[100, 200] + #[200, 200]
 //Synth 2
 SynthDef(\hat, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, rq = 0.2, gate = 1, pan = 0 |
 	var sig, env, sig2, lowcut_sig, lowcut_sig2;
@@ -28,7 +30,7 @@ SynthDef(\hat, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, r
 	Out.ar(out, Pan2.ar(lowcut_sig2 + lowcut_sig * env, pan, amp));
 }).add;
 
-// Synth('hat');
+// Synth('hat', [\freq, 1000, \filfreq, 1000]);
 
 //Synth 2
 SynthDef(\hat2, {| out = 0, freq = 6000, amp = 0.6, amp2 = 0.9, filfreq = 1700, rq = 0.2, gate = 1, pan = 0, susTime = 1 |
@@ -97,7 +99,7 @@ SynthDef(\dd, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq 
     Out.ar(out, Pan2.ar((lowcut_sig + lowcut_sig2) * env, pan, amp));
 }).add;
 
-Synth('dd', ['amp', 20.0]);
+// Synth('dd', ['amp', 20.0]);
 
 //Synth 5
 SynthDef(\dds, {| out = 0, freq = 1, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq = 300, rq = 0.1, gate = 1,
@@ -143,7 +145,7 @@ SynthDef(\ten, {| freq = 500, modfreq = 5, amp = 0.4, amp2 = 0.9, filfreq = 300,
 	// Out.ar(0, Pan2.ar((sig + lowcut_sig2) * env, pan, amp));
 }).add;
 
-Synth('ten', ['amp', 0.5, 'amp2', 0.4, 'freq', rrand(766, 500), 'nf', rrand(500, 100), 'susTime', 0.05, 'relTime', 0.1, 'hpc1', 300, 'hpc2', 100, 'cv', -10]);
+// Synth('ten', ['amp', 0.5, 'amp2', 0.4, 'freq', rrand(766, 500), 'nf', rrand(500, 100), 'susTime', 0.05, 'relTime', 0.1, 'hpc1', 300, 'hpc2', 100, 'cv', -10]);
 
 //Synth - mic in
 SynthDef(\micin, {| amp = 0, gate = 1 |
