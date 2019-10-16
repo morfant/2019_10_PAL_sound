@@ -75,7 +75,7 @@ s.waitForBoot({
 		// world A
 		// ~main_A_end.value();
 		~main_B_end.value(0.1);
-		~main_A.value(0.15, 0.1); // (amp, atkTime)
+		~main_A.value(0.2, 0.1); // (amp, atkTime)
 	});
 	if (msg[1] == '0',{
 		// "000".postln;

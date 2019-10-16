@@ -49,7 +49,7 @@
 
 // Hidden Protocol main B
 ~main_B = {
-	arg amp = 0.3, atkTime = 2.0;
+	arg amp = 0.2, atkTime = 2.0;
 	var a, b, c;
 	var a2, b2, c2;
 
@@ -95,7 +95,7 @@
 				~synth_b_c.set(\freq, abs(c2*8).midicps);
 
 
-				4.01.rand.wait;
+				8.01.rand.wait;
 			}
 		}
 	}, {
