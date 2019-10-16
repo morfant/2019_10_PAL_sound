@@ -1,39 +1,3 @@
-/************************** Synth ***************************/
-
-(
-SynthDef.new(\zwei_ein,
-	{
-		arg freq = 300, amp = 0.2, gate = 1, atkTime = 2.0, relTime = 2.0;
-		var sig, env;
-		sig = SinOsc.ar(freq);
-		env = EnvGen.kr(Env.asr(atkTime, releaseTime: relTime), gate: gate, doneAction: Done.freeSelf);
-
-		Out.ar(0, Pan2.ar(sig * env, 0, amp));
-	}
-).add;
-
-
-SynthDef(\liedRSaw,
-    {
-        |freq = 2598, amp = 0.3, gate = 1, efxfreq = 700, panfreq = 1, dronerq = 0.2, pfreq = 100, atkTime = 2.0, relTime = 2.0|
-        var sig, sig2, sig3, env, efx, pansig, out, delay, drone;
-		sig = Saw.ar(freq, mul: amp/2);
-		sig2 = LFSaw.ar(freq/2, mul: amp/4);
-		sig3 = LFPar.ar(freq*3/2, mul: amp/4);
-        env = EnvGen.kr(Env.adsr(atkTime, 0.2, 0.8, releaseTime: relTime), gate, doneAction: 2);
-		efx = RLPF.ar((sig+sig2+sig3)*env, efxfreq, 0.2, 1);
-        drone = RLPF.ar(BrownNoise.ar(0.02), 120, dronerq, 1);
-        delay = CombC.ar(efx+drone, 0.5, 0.1, 0.03, 1, efx);
-        //env = EnvGen.kr(Env.asr(0.1, 0.2, 0.5), gate, doneAction: 2);
-        pansig = LFTri.kr(panfreq, mul: 0.5, add: 0.25);
-        out = Out.ar(0, Pan2.ar(delay, 0));
-    }).add;
-)
-
-a = Synth(\liedRSaw)
-a.set(\gate, 0)
-
-
 /************************** Functions ***************************/
 (
 ~isRunA = False;
@@ -167,12 +131,12 @@ a.set(\gate, 0)
 
 
 /************************** Sequence ***************************/
-(
-~main_B_end.value();
-~main_A.value(0.2, 5.0); // (amp, atkTime)
-)
-
-(
-~main_A_end.value(3);// (relTime)
-~main_B.value(0.3, 5.0);
-)
+// (
+// ~main_B_end.value();
+// ~main_A.value(0.2, 5.0); // (amp, atkTime)
+// )
+//
+// (
+// ~main_A_end.value(3);// (relTime)
+// ~main_B.value(0.3, 5.0);
+// )

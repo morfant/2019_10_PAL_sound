@@ -1,4 +1,32 @@
 (
+SynthDef.new(\zwei_ein,
+	{
+		arg freq = 300, amp = 0.2, gate = 1, atkTime = 2.0, relTime = 2.0;
+		var sig, env;
+		sig = SinOsc.ar(freq);
+		env = EnvGen.kr(Env.asr(atkTime, releaseTime: relTime), gate: gate, doneAction: Done.freeSelf);
+
+		Out.ar(0, Pan2.ar(sig * env, 0, amp));
+	}
+).add;
+
+
+SynthDef(\liedRSaw,
+    {
+        |freq = 2598, amp = 0.3, gate = 1, efxfreq = 700, panfreq = 1, dronerq = 0.2, pfreq = 100, atkTime = 2.0, relTime = 2.0|
+        var sig, sig2, sig3, env, efx, pansig, out, delay, drone;
+		sig = Saw.ar(freq, mul: amp/2);
+		sig2 = LFSaw.ar(freq/2, mul: amp/4);
+		sig3 = LFPar.ar(freq*3/2, mul: amp/4);
+        env = EnvGen.kr(Env.adsr(atkTime, 0.2, 0.8, releaseTime: relTime), gate, doneAction: 2);
+		efx = RLPF.ar((sig+sig2+sig3)*env, efxfreq, 0.2, 1);
+        drone = RLPF.ar(BrownNoise.ar(0.02), 120, dronerq, 1);
+        delay = CombC.ar(efx+drone, 0.5, 0.1, 0.03, 1, efx);
+        //env = EnvGen.kr(Env.asr(0.1, 0.2, 0.5), gate, doneAction: 2);
+        pansig = LFTri.kr(panfreq, mul: 0.5, add: 0.25);
+        out = Out.ar(0, Pan2.ar(delay, 0));
+    }).add;
+
 //Synth 1
 SynthDef(\bass, {| out = 0, amp = 0.2, lf = 100, rq = 0.9, envdur = 0.4, gate = 1,
 	freqs = #[220, 440, 880, 1760],
@@ -14,7 +42,7 @@ SynthDef(\bass, {| out = 0, amp = 0.2, lf = 100, rq = 0.9, envdur = 0.4, gate = 
 	Out.ar(out, Pan2.ar(lowcut_sig * env, 0, amp));
 }).add;
 
-Synth('bass', [\freqs, (#[200, 300] + (#[130, 140].rand)).postln, \amp, 3, \envdur, 0.2]);
+// Synth('bass', [\freqs, (#[200, 300] + (#[130, 140].rand)).postln, \amp, 3, \envdur, 0.2]);
 
 // #[100, 200] + #[200, 200]
 //Synth 2
